@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title> Three.js app </title>
+
+        <style>
+            body {margin: 0;}
+
+        </style>
+    </head>
+    <body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/102/three.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenMax.min.js"></script>
+
+        <script>
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000); // field of view (degrees), aspect ratio, near & far (how close or far does can it be to be rendered)
+
+            const renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight); // for performance intensive apps, can give setSize smaller values (like dividing windows by 2)
+            // updateStyle is the third argument; setting it to false --> renders app at half resolution given that canvas has 100% width and height
+            document.body.appendChild(renderer.domElement);
+
+            // Box geometry contains all the points and fill of the cube
+            const geometry = new THREE.BoxGeometry();
+
+            // materials take an object of properties which will applied to them
+            const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+
+            const cube = new THREE.Mesh(geonetry, material); // Mesh takes a geometry and applies a material to it
+
+            scene.add(cube); // by default, the coordinates are (0,0,0)
+
+            camera.position.z = 5; // zoom out the camera because the cube and the camera are currently inside of each other
+
+            // need an animate loop in order to continuously render the object
+            function animate(){
+                requestAnimationFrame( animate );
+                // add animations here!
+                cube.rotation.x += 0.01;
+                cube.rotation.y += 0.01;
+
+                renderer.render( scene, camera );
+            }
+            animate();
+        </script>
+    </body>
+</html>
